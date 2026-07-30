@@ -28,8 +28,11 @@ extraction workflow so future document batches can be parsed and merged in quick
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Sales Comparables** – warehouse sale comps supporting the R0169133 appraisal.
-8. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+
+> Scope: this database is for **lease and income/expense** extraction and storage. Sales
+> comparables and other market/appraisal support data in the source files are intentionally
+> not stored here.
 
 ## Notes
 

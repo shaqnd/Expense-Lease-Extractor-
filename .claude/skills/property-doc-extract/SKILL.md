@@ -81,7 +81,7 @@ boilerplate pages.
   address, owner/client, assessor value, taxpayer opinion, $/SF. p2 = property summary (assessee,
   parcel, site class, land AC, year built, SF, prior/current county value). p3 = Market Pro Forma
   (face rent, vacancy %, expense %, cap rate, PGI/EGI/OpEx/NOI, indicated value). Later pages =
-  CoStar sale/rent comps (supporting; capture only if asked).
+  CoStar sale/rent comps — **skip these** (out of scope; see step 5).
 - **County Income & Expense Survey**: owner-occupancy %, use, and the operating-expense grid
   (owner vs tenant columns). "in house" = owner self-performs, enter $0 and annotate.
 - **P&L / Cash-Flow (Deerwoods, etc.)**: income accounts (rent, CAM escrows), expense accounts,
@@ -105,7 +105,11 @@ Structure (row-per-record so it scales as documents keep arriving):
 4. **Assessments & Valuation** – historical assessed values + income-approach proformas.
 5. **Income-Expense Summary** – total income / expense / net by property & year.
 6. **Income-Expense Detail** – line items; totals via `=SUM` cross-checking printed totals.
-7. **Sales Comparables** / **Related Parcels** – as available.
+7. **Related Parcels** – co-listed parcel schedules, as available.
+
+**Scope: lease and income/expense only.** Do **not** store sales comparables, rent comps, or
+other CoStar/appraisal market-support data — skip those pages during extraction. The database
+holds subject-property identity, leases/rent rolls, income/expense, and valuation summaries.
 
 Conventions: Arial; `$#,##0` money, `0.00%` percents stored as fractions; navy title bars;
 blue header rows; green subtotal fills; cite the source file in each block; annotate every
