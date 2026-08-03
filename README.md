@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (13)
+## Subject Properties (20)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -24,6 +24,13 @@ extraction workflow so future document batches can be parsed and merged in quick
 | Majestic Commercenter | R0083953 | — | 20901 E. 32nd Pkwy, Aurora, CO | Industrial – Warehouse (4 suites) |
 | 3254 & 3650 Fraser St | R0084233, R0084262 | — | 3254–3650 Fraser St, Aurora, CO | Industrial – Warehouse (2 bldgs, multi-tenant) |
 | 14501 E. 35th Pl | R0084237 | 01821-30-0-02-005 | 14501 E. 35th Pl, Aurora, CO | Industrial – Warehouse/Distribution |
+| 1803 E 58th Ave (Arakouzo) | R0103791 | R0103791 | 1803 E 58th Ave, Denver, CO 80216 | Industrial – Warehouse/Bakery (single-tenant NNN) |
+| 14200 E. 33rd Pl | R0084249 | 01821-30-0-04-010 | 14200 E. 33rd Pl, Aurora, CO | Industrial – Warehouse (5 units) |
+| 3250 Abilene St | R0084250 | bt42569 | 3250 Abilene St, Aurora, CO | Industrial – Warehouse (3 units, 69.7% vacant) |
+| 14509 E. 33rd Pl | R0084253 | bt46265 | 14509 E. 33rd Pl, Aurora, CO | Industrial – Warehouse (5 units) |
+| 14705 E. 33rd Pl | (not stated) | bt46267 | 14705 E. 33rd Pl, Aurora, CO | Industrial – Warehouse |
+| 14501 E. Moncrieff Pl | R0084268 | — | 14501 E. Moncrieff Pl, Aurora, CO | Industrial – Warehouse (single-tenant NNN) |
+| Aurora – Uravan (Wagner) | R0086203 | R0086203 | 2420 Uravan St, Aurora, CO 80011 | Industrial – Warehouse |
 
 ## Workbook Tabs
 
@@ -64,3 +71,10 @@ extraction workflow so future document batches can be parsed and merged in quick
   3/31/2024; Colorado Industrial Packaging took 32,556 SF from 6/1/2024 (rent abated to 9/1/24).
 - **3254/3650 Fraser** income-statement "Total Expense" figures include capital expenditures
   (TI, roof, building, lease commissions) as printed, so their nets are cash-flow figures, not NOI.
+- **R0084262.pdf** is a duplicate of the R0084233 (Fraser) package and was indexed but not
+  re-extracted. **R0084253.pdf** holds the 14509 E 33rd Pl rent roll while its companion upload
+  (R00842532.pdf) is the 14705 E 33rd Pl income statement — stored as two properties.
+- **3250 Abilene & 14705 E 33rd** Yardi statements display whole dollars and include a
+  Gas-Vacancy line in the printed Direct-Billable subtotal that the Property-Operating rollup
+  excludes; their subtotals are entered as printed values (not `SUM` formulas), with the quirk
+  annotated in the Detail tab.
