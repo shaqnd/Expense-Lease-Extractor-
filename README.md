@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (8)
+## Subject Properties (11)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -19,16 +19,19 @@ extraction workflow so future document batches can be parsed and merged in quick
 | SGS – Pennsylvania Industrial | R0024442 | R0024442 | 12260 Pennsylvania St, Thornton, CO | Industrial – Warehouse |
 | Broadview | R0002819 | 01569-06-3-13-002 | 125 Bridge St, Brighton, CO 80602 | Commercial (multi-tenant) |
 | 6770 E. 56th Ave | R0092302 | R0092302 | 6770 E. 56th Ave, Aurora, CO 80022 | Industrial – Warehouse |
+| Aurora Altura Boulevard CS 6731 | R0085571 | 0182131405022 | 1540 Altura Blvd, Aurora, CO 80011 | Specialty – Self-Storage (CubeSmart) |
+| Aurora – 18th Avenue CS 6730 | R0086010 | 0182132318001 | 15413 E 18th Ave, Aurora, CO 80011 | Self Storage (CubeSmart) |
+| Thornton (TH) – Dahn 21548 | R0040829 | 0171914201013 | 10350 Washington St, Thornton, CO 80229 | Self Storage (Mini U Storage) |
 
 ## Workbook Tabs
 
 1. **Source Documents** – index of the source files and compilation notes.
 2. **Property Master** – one row per property: IDs, parcel, address, owner, assessee, type, tenancy, site/GBA/NRA, year built, land:bldg, occupancy, valuation summary.
-3. **Tenants & Leases** – actual rent rolls (125 Bridge St: 11 tenants w/ rent, term, CAM; 5970 Marion units) plus proforma lease assumptions used in the tax appeals.
+3. **Tenants & Leases** – actual rent rolls (125 Bridge St: 11 tenants w/ rent, term, CAM; 5970 Marion units), proforma lease assumptions used in the tax appeals, and self-storage occupancy / unit-mix snapshots (storEDGE & SiteLink reports as of 12/31/2024).
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+7. **Related Parcels** – portfolio parcel schedules attached to the source packages: North Side Gardens LLC (4 parcels), Winner Storage / CubeSmart PTA (29 parcels), and Dahn Corporation / Mini U Storage (10 parcels).
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -49,3 +52,11 @@ extraction workflow so future document batches can be parsed and merged in quick
   tax figures, not NOI. See the Assessments & Valuation tab for stabilized-NOI proformas.
 - R0169133's cover value ($3,408,546) differs from its schedule total ($3,114,815); both are
   reproduced as printed.
+- Self-storage income statements (CubeSmart stores #6730/#6731, Mini U Storage Thornton) are
+  store-level accrual **NOI-basis** statements: property tax and third-party management fees are
+  included; interest, depreciation, and extraordinary items are excluded (captured as memo lines
+  for 10350 Washington St). The Cushman & Wakefield H2-2024 self-storage investor survey bundled
+  in R0040829 is market-support material and was intentionally not stored.
+- R0040829's Ryan package prints its value year with a dropped digit ("202"); the LOA covers
+  2025/2026 with a 6/30/2024 level of value, so it is recorded as "2025/2026". R0086010 is a
+  Value-Year-2026 package whose abatement petition targets Tax Year 2025; both years are noted.
