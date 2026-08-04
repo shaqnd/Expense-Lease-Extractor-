@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (11)
+## Subject Properties (20)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -22,6 +22,15 @@ extraction workflow so future document batches can be parsed and merged in quick
 | Aurora Altura Boulevard CS 6731 | R0085571 | 0182131405022 | 1540 Altura Blvd, Aurora, CO 80011 | Specialty – Self-Storage (CubeSmart) |
 | Aurora – 18th Avenue CS 6730 | R0086010 | 0182132318001 | 15413 E 18th Ave, Aurora, CO 80011 | Self Storage (CubeSmart) |
 | Thornton (TH) – Dahn 21548 | R0040829 | 0171914201013 | 10350 Washington St, Thornton, CO 80229 | Self Storage (Mini U Storage) |
+| 5720 Holly St | R0091907 | 0182308302003 | 5720 Holly St, Commerce City, CO 80022 | Industrial – Warehouse (multi-tenant) |
+| Park Industrial 6125 | R0091909 | R0091909 | 6125 E. 56th Ave, Commerce City, CO 80022 | Industrial / Flex (multi-tenant) |
+| Metal Mart (Hillenmark) | R0091912 | — | 6475 E. 56th Ave (56th @ Monaco), Commerce City, CO 80022 | Industrial – single-tenant distribution |
+| Park Industrial 6300/6340/6360 | R0091931 | R0091931 | 6300 E. 58th Ave, Commerce City, CO 80022 | Industrial / Flex (multi-tenant) |
+| Park Industrial 5800 | R0091933 | R0091933 | 5800 E. 58th Ave, Commerce City, CO 80022 | Industrial / Flex (multi-tenant) |
+| Park Industrial 5750 | R0091934 | R0091934 | 5750 E. 58th Ave, Commerce City, CO 80022 | Industrial / Flex (multi-tenant) |
+| WPC 50th LLC | R0092711 (+ R0181935) | R0092711 | 6701 E. 50th Ave, Commerce City, CO 80022 | Industrial – Warehouse (multi-tenant) |
+| 4950 Olive Street | R0092720 | R0092720 | 4950 Olive St, Commerce City, CO 80022 | Commercial |
+| 6475 Franklin Street | R0098149 | 0182502308019 | 6475 Franklin St, Adams County, CO | Commercial office & warehouse (owner-occupied) |
 
 ## Workbook Tabs
 
@@ -31,7 +40,7 @@ extraction workflow so future document batches can be parsed and merged in quick
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – portfolio parcel schedules attached to the source packages: North Side Gardens LLC (4 parcels), Winner Storage / CubeSmart PTA (29 parcels), and Dahn Corporation / Mini U Storage (10 parcels).
+7. **Related Parcels** – portfolio parcel schedules attached to the source packages: North Side Gardens LLC (4 parcels), Winner Storage / CubeSmart PTA (29 parcels), Dahn Corporation / Mini U Storage (10 parcels), Watumull Properties / WPC (12 Adams County parcels of ~40 listed), and Peoria Way Associates LLC (4 parcels).
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -60,3 +69,29 @@ extraction workflow so future document batches can be parsed and merged in quick
 - R0040829's Ryan package prints its value year with a dropped digit ("202"); the LOA covers
   2025/2026 with a 6/30/2024 level of value, so it is recorded as "2025/2026". R0086010 is a
   Value-Year-2026 package whose abatement petition targets Tax Year 2025; both years are noted.
+- **Commerce City batch (R0091907–R0098149).** The four Sterling Property Tax appeals (6125 E. 56th
+  and 6300 / 5800 / 5750 E. 58th) share one owner and one Yardi chart of accounts. Their Exhibit A
+  statements are accrual and property-level: real-estate tax is **inside** operating expense, while
+  mortgage interest and depreciation sit below NOI and are carried as memo lines. Sterling's letter
+  recasts expense as RE Taxes + CAM Reimbursable + CAM Non-Reimbursable; CAM Reimbursable equals
+  Total Operating Expenses less Tax Real Estate to the dollar, and CAM Non-Reimbursable is a
+  Sterling-selected subset of the non-CAM block, so the letter's "Total Expenses" runs above the
+  statement's Total Operating Expenses. Sterling capitalizes at 7.25% plus a 2.45% tax load (9.70%)
+  and therefore excludes RE tax from the capitalized expense; the two 1st Net appeals (5720 Holly,
+  6701 E. 50th) capitalize actual rent-roll income at an unloaded rate with **formulaic** expenses
+  (management 3% + reserve/owner 5% of EGI), not actual operating statements.
+- The file uploaded as **R0091936 is a byte-for-byte duplicate** of the R0091934 package (all 27
+  pages render identically); no data for schedule R0091936 was received.
+- 5720 Holly St: the owner summary prints annual rent of $484,407 alongside an average rent of
+  $8.72/SF, which are mutually inconsistent ($484,407 ÷ 54,300 SF = $8.92/SF); the appeal's income
+  analysis uses the $8.72 figure ($473,496). The Ginzel lease end (6/30/2026 on the Yardi roll vs
+  11/30/2026 on the owner summary) also differs; both are reproduced as printed.
+- 6701 E. 50th Ave: the Colliers rent roll shows 0 vacant SF while the appeal's sales grid states
+  14% vacancy and its income analysis applies a 5% vacancy deduction. True World Foods' lease
+  expired 4/30/2024 (holdover), and its prorated annual rent reflects a 5/1/2023 rent step.
+- 4950 Olive St carries no income/expense or rent-roll data — the package is the protest letter plus
+  the prior-year BAA stipulation and order. The BAA docket names the petitioner "First California
+  Investments" while the letter of authority names the owner "Peoria Way Associates LLC".
+- 6475 Franklin St is an assessor income/expense survey only: 100% owner-occupied, so no rental
+  income is reported, and the form prints no expense total (the `=SUM` is computed). Property taxes
+  ($90,477) and bank fees ($151) were handwritten on the Comments line rather than in the grid.
