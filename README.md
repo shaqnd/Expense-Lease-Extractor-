@@ -34,6 +34,20 @@ extraction workflow so future document batches can be parsed and merged in quick
 > comparables and other market/appraisal support data in the source files are intentionally
 > not stored here.
 
+## Standalone Analyses
+
+`1521-1527_Peoria_St_Lease_Comparables_Analysis.xlsx` — lease-comparable extract and
+adjustment analysis for **Grease Monkey International, LLC**, 1521-1527 Peoria St, Aurora CO
+80010 (Adams County, parcel 182335429010, assessment year 2025/2026). All 8 CoStar retail
+lease comps from the Ryan, LLC appeal package are captured with full attributes, plus an
+adjustment grid concluding a market rent on a triple-net basis. Built by
+`scripts/build_peoria_lease_comps.py`.
+
+Tabs: Subject & Conclusion · Comparables · Adjustment Grid · Market Conditions · Source Notes.
+
+> This file is kept **separate from** `Master_Property_Database.xlsx` by design — comparables
+> are market-support data, which the master database scope excludes.
+
 ## Notes
 
 - Total / net-income / average cells are live spreadsheet formulas (`SUM`, `AVERAGE`,
