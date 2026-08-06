@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (13)
+## Subject Properties (18)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -24,6 +24,11 @@ extraction workflow so future document batches can be parsed and merged in quick
 | Majestic Commercenter – Bldg 7 | R0111560 | R0111560 | 20320 E. 36th Dr, Aurora, CO 80011 | Industrial – Warehouse |
 | Friesen–Washington | R0114026 | 01825-10-1-02-023 | 6051 Washington St, Adams County, CO | Commercial / Industrial (multi-tenant) |
 | Anchor Business Park | R0121833 | 25-31459-0001-CO | 5360 Washington St, Denver, CO 80216 | Industrial – Warehouse |
+| 11459 5977-5995 N Broadway | R0103518 | R0103518 | 5977-5995 N. Broadway, Denver, CO 80216 | Industrial – Distribution |
+| 5945 & 5957 Broadway | R0103519 | R0103519 | 5945 Broadway, Denver, CO | Commercial / Industrial (multi-tenant) |
+| 5720 Washington St | R0103704 | 0182511300068 | 5720 Washington St, Denver, CO 80216-1322 | Office / Warehouse (owner-occupied) |
+| 1890 E 58th Ave | R0103779 | 0182511400063 | 1890 E 58th Ave, Denver, CO 80216 | Industrial – Warehouse |
+| 550 W 53rd Pl | R0104122 | 0182515202002 | 550 W 53rd Pl, Adams County, CO | Industrial / Retail (multi-tenant) |
 
 ## Workbook Tabs
 
@@ -33,7 +38,7 @@ extraction workflow so future document batches can be parsed and merged in quick
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way; the two Majestic Commercenter buildings; and the 16 Adams County parcels from the First Industrial 40-parcel letter-of-authorization schedule.
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -41,10 +46,12 @@ extraction workflow so future document batches can be parsed and merged in quick
 
 ## Standalone Analyses
 
-`Lease_Comparables_5_Adams_County_Packages.xlsx` — the 20 lease comparables carried by three of the
-five Adams County appeal packages (R0110351 Ryan/CoStar, R0121833 Sansone/CoStar, and the shared
-Sterling Exhibit F survey used by both R0111559 and R0111560). Tabs: Lease Comparables · Set
-Statistics · Notes & Data Gaps. Built by `scripts/build_5pkg_lease_comps.py` (+ `..._tabs.py`).
+`Lease_Comparables_Adams_County_Packages.xlsx` — the 23 lease comparables carried by four of the
+ten Adams County appeal packages (R0110351 Ryan/CoStar, R0121833 Sansone/CoStar, R0103518
+Ryan/CoStar, and the shared Sterling Exhibit F survey used by both R0111559 and R0111560). The
+other six packages contain no comparables. Tabs: Lease Comparables · Set Statistics · Notes &
+Data Gaps. Built by `scripts/build_5pkg_lease_comps.py` (+ `..._tabs.py`,
+`add_R0103518_lease_comps.py`).
 
 Notable: the Sansone comp set includes the subject property's own Unit B space at $10.75/SF asking,
 while the executed lease in the same package is $9.50/SF NNN. CoStar's published "Average" is
@@ -97,3 +104,15 @@ Tabs: Subject & Conclusion · Comparables · Adjustment Grid · Market Condition
   printed NOI and cap rate (e.g. $347,380 ÷ 9.90% = $3,508,889 vs. the printed $3,510,421); figures
   are reproduced as printed rather than recalculated.
 - Rent rolls for both Commercenter buildings are dated **06/30/22**, not the 6/30/2024 date of value.
+- **R0103518** prints two internal $1 rounding differences (Total Rent Revenue $330,136 vs. $330,135 of
+  components; Total Common Area Repair/Maint. $32,391 vs. $32,392). Both are reproduced as printed and
+  annotated on the Income-Expense Detail rows. Its cover sheet gives the ZIP as 80012 while the rent
+  roll and parcel schedule say 80216, and the stated NLA (54,431 SF) exceeds the rent roll's project
+  area (50,280 SF). Its assessment year prints as 2024 with a date of value of June 30, **2025**.
+- **R0103704 and R0103779** are handwritten county income/expense surveys with no printed totals; the
+  totals in this database are sums of the handwritten entries. R0103704's expenses were written into
+  the *tenant* column despite 100% owner-occupancy; R0103779 marks janitorial and snow/trash "T"
+  rather than a dollar amount, and reports both ~50% owner-occupancy and 100% of the building leased.
+- **R0104122** is a rent roll only — no income statement, no lease dates for one of its two tenants.
+- **R0103519**'s rent roll lists five spaces by square footage with **no tenant names, lease dates or
+  terms**, across five snapshot dates (1/1/23, 6/30/23, 1/1/24, 6/30/24, 1/1/25).
