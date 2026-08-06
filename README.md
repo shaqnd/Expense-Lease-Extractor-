@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (18)
+## Subject Properties (23)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -29,6 +29,11 @@ extraction workflow so future document batches can be parsed and merged in quick
 | 5720 Washington St | R0103704 | 0182511300068 | 5720 Washington St, Denver, CO 80216-1322 | Office / Warehouse (owner-occupied) |
 | 1890 E 58th Ave | R0103779 | 0182511400063 | 1890 E 58th Ave, Denver, CO 80216 | Industrial – Warehouse |
 | 550 W 53rd Pl | R0104122 | 0182515202002 | 550 W 53rd Pl, Adams County, CO | Industrial / Retail (multi-tenant) |
+| 5710 E. 56th Avenue | R0187789 | R0187789 | 5710 E. 56th Ave, Commerce City, CO | Industrial / Flex (multi-tenant) |
+| Confluent Center 70 | R0188699 | R0188699 | 15100 E 40th Ave, Aurora, CO | Industrial (30' clear) |
+| 17851 E 40th Avenue | R0198179 | — | 17851 E 40th Ave, Aurora, CO 80011 | Industrial – leased to the State of Colorado |
+| Majestic Commercenter – Bldg 5 | R0191099 | R0191099 | 3559 N Himalaya Rd, Aurora, CO 80011 | Industrial – Warehouse |
+| 3420 Lisbon Street | R0200721 | R0200721 | 3420 N. Lisbon St, Aurora, CO 80011 | Industrial – Warehouse |
 
 ## Workbook Tabs
 
@@ -38,7 +43,7 @@ extraction workflow so future document batches can be parsed and merged in quick
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way; the two Majestic Commercenter buildings; and the 16 Adams County parcels from the First Industrial 40-parcel letter-of-authorization schedule.
+7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way; four Majestic Commercenter / Majestic Lisbon buildings (R0111559, R0111560, R0191099, R0200721); and the 16 Adams County parcels from the First Industrial 40-parcel letter-of-authorization schedule.
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -46,10 +51,10 @@ extraction workflow so future document batches can be parsed and merged in quick
 
 ## Standalone Analyses
 
-`Lease_Comparables_Adams_County_Packages.xlsx` — the 23 lease comparables carried by four of the
-ten Adams County appeal packages (R0110351 Ryan/CoStar, R0121833 Sansone/CoStar, R0103518
-Ryan/CoStar, and the shared Sterling Exhibit F survey used by both R0111559 and R0111560). The
-other six packages contain no comparables. Tabs: Lease Comparables · Set Statistics · Notes &
+`Lease_Comparables_Adams_County_Packages.xlsx` — the 38 lease comparables carried by seven of the
+fifteen Adams County appeal packages (R0110351, R0103518 and R0188699 Ryan/CoStar;
+R0121833 Sansone/CoStar; R0187789 and R0200721 Sterling; plus the shared Sterling Exhibit F survey
+used by R0111559, R0111560 and R0191099). The other eight packages contain no comparables. Tabs: Lease Comparables · Set Statistics · Notes &
 Data Gaps. Built by `scripts/build_5pkg_lease_comps.py` (+ `..._tabs.py`,
 `add_R0103518_lease_comps.py`).
 
@@ -116,3 +121,17 @@ Tabs: Subject & Conclusion · Comparables · Adjustment Grid · Market Condition
 - **R0104122** is a rent roll only — no income statement, no lease dates for one of its two tenants.
 - **R0103519**'s rent roll lists five spaces by square footage with **no tenant names, lease dates or
   terms**, across five snapshot dates (1/1/23, 6/30/23, 1/1/24, 6/30/24, 1/1/25).
+- **R0198179** is an executed **Second Amendment to Lease** rather than an appeal: Prologis, L.P. to the
+  State of Colorado (Division of Homeland Security and Emergency Management), 82,131 RSF at
+  17851 E 40th Ave, renewal term 7/1/2026–6/30/2033. Its 7-step rent schedule, $2.50/SF TI allowance and
+  $128,648.31 JLL commission are all captured. Note the schedule deducts a **$2.32/RSF** property-tax
+  credit while the accompanying footnote states Adams County taxes are **$4.53/RSF**; both are printed.
+- **R0200721** reports its own in-place lease three different ways — $7.30/SF scheduled on the Exhibit C
+  survey, $7.7446/SF on the 06/01/24 rent roll, and $7.60/SF in the letter text. All three are recorded.
+  Its comp survey averages $9.30/SF scheduled and $8.41/SF effective, yet the income analysis applies
+  $11.00/SF.
+- The **3559 N. Himalaya Road, Suite 100** lease (Erickson Metals) is a tenant *at* subject property
+  R0191099 and is simultaneously used as a rent comparable in the Sterling surveys for R0111559,
+  R0111560 and R0200721, where it is shown at $6.97/SF against the $6.75/SF on R0191099's own rent roll.
+- **R0188699** carries no rent roll; occupancy (100%) and actual 2024 NNN income are stated at the
+  property level only. Its $1,536,047 printed EGI is $1 below the sum of its own components.
