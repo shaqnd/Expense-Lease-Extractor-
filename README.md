@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (23)
+## Subject Properties (28)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -34,6 +34,11 @@ extraction workflow so future document batches can be parsed and merged in quick
 | 17851 E 40th Avenue | R0198179 | — | 17851 E 40th Ave, Aurora, CO 80011 | Industrial – leased to the State of Colorado |
 | Majestic Commercenter – Bldg 5 | R0191099 | R0191099 | 3559 N Himalaya Rd, Aurora, CO 80011 | Industrial – Warehouse |
 | 3420 Lisbon Street | R0200721 | R0200721 | 3420 N. Lisbon St, Aurora, CO 80011 | Industrial – Warehouse |
+| 5690 E. 56th Avenue | R0187787 | R0187787 | 5690 E. 56th Ave, Commerce City, CO | Industrial / Flex (multi-tenant) |
+| Alpine Park II | R0157664 | 0172132216014 | 6045 E 76th Ave, Commerce City, CO | Industrial – Warehouse (multi-bay) |
+| 9410 Heinz Way | R0164588 | R0164588 | 9410 Heinz Way, Commerce City, CO | Industrial – Distribution (vacant) |
+| 2850 Walden Street | R0164287 | 0182128401002 | 2850 Walden St, Aurora, CO 80011 | Industrial – Warehouse / Distribution |
+| Park 70 – 1910 N Gun Club Rd | R0180894 | R0180894 | 1910 N Gun Club Rd, Aurora, CO 80019 | Industrial – Warehouse (Class A) |
 
 ## Workbook Tabs
 
@@ -43,7 +48,7 @@ extraction workflow so future document batches can be parsed and merged in quick
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way; four Majestic Commercenter / Majestic Lisbon buildings (R0111559, R0111560, R0191099, R0200721); and the 16 Adams County parcels from the First Industrial 40-parcel letter-of-authorization schedule.
+7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way; four Majestic Commercenter / Majestic Lisbon buildings (R0111559, R0111560, R0191099, R0200721); the two KEW Realty buildings on E. 56th Ave (R0187787, R0187789); and the 16 Adams County parcels from the First Industrial 40-parcel letter-of-authorization schedule.
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -51,10 +56,11 @@ extraction workflow so future document batches can be parsed and merged in quick
 
 ## Standalone Analyses
 
-`Lease_Comparables_Adams_County_Packages.xlsx` — the 38 lease comparables carried by seven of the
-fifteen Adams County appeal packages (R0110351, R0103518 and R0188699 Ryan/CoStar;
-R0121833 Sansone/CoStar; R0187789 and R0200721 Sterling; plus the shared Sterling Exhibit F survey
-used by R0111559, R0111560 and R0191099). The other eight packages contain no comparables. Tabs: Lease Comparables · Set Statistics · Notes &
+`Lease_Comparables_Adams_County_Packages.xlsx` — the 43 lease comparables carried by eight of the
+twenty Adams County appeal packages (R0110351, R0103518 and R0188699 Ryan/CoStar;
+R0121833 Sansone/CoStar; R0164588 Ryan/CoStar; R0187789 Sterling (a set reused verbatim for its
+sibling R0187787) and R0200721 Sterling; plus the shared Sterling Exhibit F survey used by R0111559,
+R0111560 and R0191099). The other twelve packages contain no comparables. Tabs: Lease Comparables · Set Statistics · Notes &
 Data Gaps. Built by `scripts/build_5pkg_lease_comps.py` (+ `..._tabs.py`,
 `add_R0103518_lease_comps.py`).
 
@@ -135,3 +141,19 @@ Tabs: Subject & Conclusion · Comparables · Adjustment Grid · Market Condition
   R0111560 and R0200721, where it is shown at $6.97/SF against the $6.75/SF on R0191099's own rent roll.
 - **R0188699** carries no rent roll; occupancy (100%) and actual 2024 NNN income are stated at the
   property level only. Its $1,536,047 printed EGI is $1 below the sum of its own components.
+- **R0164588** (9410 Heinz Way) was **100% vacant** at the 6/30/2024 date of value — Home Depot's lease
+  expired November 2022 and the space had been listed roughly four years. The assessor still raised it
+  37.8% to $17,644,243; the appeal asks $8,539,000.
+- **R0187787**'s rent roll shows the Techneaux Technology Services unit at **$0.00 monthly rent** at
+  6/30/2024 — the lease had commenced two months earlier and was in a rent-abatement period. The letter
+  nonetheless cites it as the base-period lease that is "in-line with market".
+- **R0164287** (2850 Walden St) is an **owner-filed** CBOE appeal carrying a 2010–2025 rent history
+  ($4.86/SF rising to $7.57/SF). Its work sheet derives a cap rate *from* the assessor's value rather
+  than from the market, to show the implied 1.14% return. The county survey ticks "Gross" while its own
+  comments state the tenant pays every expense except property tax. Building size is given as 27,800 SF
+  on the survey and 27,819 SF on the rent schedule and work sheet.
+- **R0157664**'s agent analysis and its underlying statements disagree for 2022: the analysis shows
+  income of $258,492 and real estate taxes of $59,147, while the income statement shows $258,992.67
+  (it omits $500 of damages income) and $66,104.78 of taxes. Both are recorded as printed.
+- **R0180894** reports NLA as 163,790 SF on its salient-facts page and 163,386 SF on its income-trends
+  page; its cover sheet prints $150.00 PSF against $150.10 in the assessed-value summary.
