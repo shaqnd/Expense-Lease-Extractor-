@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (11)
+## Subject Properties (12)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -22,6 +22,7 @@ extraction workflow so future document batches can be parsed and merged in quick
 | Denver Distribution Center | R0180834 | — | not stated in source | Industrial – Warehouse / Distribution (553,757 SF) |
 | 2780 North Tower Road | R0212546 | — | 2780 N. Tower Road, Aurora, CO | Industrial – Warehouse, single tenant (377,729 SF, 1983) |
 | Majestic Commercenter (WPC ABC LLC) | R0083953 | — | 20901 E. 32nd Pkwy, Aurora, CO | Industrial – 4 × 50,000 SF units (200,000 SF, 1985) |
+| Commercenter #22 LLC | R0132030 | — | Aurora, CO 80011 | Industrial – multi-tenant (200,090 SF, 24.99% vacant) |
 
 ## Workbook Tabs
 
@@ -68,5 +69,25 @@ extraction workflow so future document batches can be parsed and merged in quick
   per month ($3.12 → $3.51/SF). Three full years of income statements (FY2022–FY2024) are loaded.
   Its 6/30/2024 recap page shows Peco Pallet expiring 3/31/2030 while the Colliers rent roll for
   the same date shows 3/31/2025; both are reproduced as printed.
-- None of the five documents in this batch contain an assessor value or a petitioner opinion of
-  value, so no rows were added to **Assessments & Valuation** for these three properties.
+- None of the five documents in that batch contain an assessor value or a petitioner opinion of
+  value, so no rows were added to **Assessments & Valuation** for those three properties.
+- **R0132030 / Commercenter #22 LLC** — 200,090 SF in Aurora, only two suites leased (Expeditors
+  International 64,835 SF to 7/31/2026; Steelcase 85,253 SF to 12/31/2024) with **50,002 SF
+  (24.99%) vacant at all three rent-roll dates** (6/30/23, 12/31/23, 6/1/24). FY2024 accrual:
+  revenue $1,648,443, operating expense $872,475, **operating income $775,968**; after $457,398
+  mortgage interest and $743,031 of other (income)/expense the printed bottom line is a **net loss
+  of $(424,461)**. The petitioner's Exhibit H proforma indicates $14,013,500 as-if-stabilized
+  ($70.04/SF) and **$13,402,900** after a $(610,600) excess-vacancy adjustment.
+  - ⚠️ *Source-document defect, reproduced not corrected:* the statement's "Total Other
+    (Income)/Expense" subtotal of $743,031.13 does not equal its own printed line items, which add
+    to $25,001.47. The $718,029.66 gap is exactly twice the $(359,014.83) Depr-Buildings Step Up
+    credit — the report adds that credit rather than subtracting it. The printed subtotal is the
+    one consistent with the printed net loss, so it is entered as a hard value (not a `SUM`) and
+    the line items are entered as printed, with the discrepancy annotated in the cell.
+  - The proforma's "Adjustment for 67% Vacancy" label is as printed and does not match the 24.99%
+    vacancy on the rent roll.
+- The **Dollar General / HighPoint Elevated** article (Mile High CRE, 8/9/2022) covers a 919,000 SF
+  build-to-suit at a third-party Aurora development. It carries no rent roll, lease, or
+  income/expense data for any subject property, so it is indexed in **Source Documents** for
+  context only and has no Property Master row — consistent with the database scope, which excludes
+  market/comparable support material.
