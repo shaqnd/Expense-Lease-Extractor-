@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (12)
+## Subject Properties (30)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -19,10 +19,19 @@ extraction workflow so future document batches can be parsed and merged in quick
 | SGS – Pennsylvania Industrial | R0024442 | R0024442 | 12260 Pennsylvania St, Thornton, CO | Industrial – Warehouse |
 | Broadview | R0002819 | 01569-06-3-13-002 | 125 Bridge St, Brighton, CO 80602 | Commercial (multi-tenant) |
 | 6770 E. 56th Ave | R0092302 | R0092302 | 6770 E. 56th Ave, Aurora, CO 80022 | Industrial – Warehouse |
-| Denver Distribution Center | R0180834 | — | not stated in source | Industrial – Warehouse / Distribution (553,757 SF) |
-| 2780 North Tower Road | R0212546 | — | 2780 N. Tower Road, Aurora, CO | Industrial – Warehouse, single tenant (377,729 SF, 1983) |
-| Majestic Commercenter (WPC ABC LLC) | R0083953 | — | 20901 E. 32nd Pkwy, Aurora, CO | Industrial – 4 × 50,000 SF units (200,000 SF, 1985) |
+| Denver Distribution Center | R0180834 | — | not stated in source | Industrial – Distribution (553,757 SF) |
+| 2780 North Tower Road | R0212546 | — | 2780 N. Tower Road, Aurora, CO | Industrial – single tenant (377,729 SF, 1983) |
 | Commercenter #22 LLC | R0132030 | — | Aurora, CO 80011 | Industrial – multi-tenant (200,090 SF, 24.99% vacant) |
+| 650 W. 104th Ave | R0037193 | 0171910307020 | 650 W. 104th Ave, Northglenn, CO 80234 | Commercial – collision repair shop |
+| RJR Investments | R0075352 | 0172116004003 | not stated in source | Industrial – office/shop/storage (~136,776 SF) |
+| 7908 Highway 85 | R0077789 | 0172131110004 | 7908 Highway 85, Commerce City, CO 80022 | Industrial – asphalt/concrete recycling |
+| 4850 E. 74th Ave | R0077963 | 0172131402020 | 4850 E. 74th Ave, Commerce City, CO 80022 | Industrial – tank trailer/truck (18,720 SF) |
+| 14891 E. Colfax Ave | R0085560 | R0085560 | 14891 E. Colfax Ave, Aurora, CO | Commercial – Meineke Car Care (4,264 SF) |
+| 11400 Huron | R0030085 | 0171903005007 | 11400 Huron, CO | Commercial – tire store (~3,840 SF) |
+| 11450 N. Huron St | R0030089 | 1719-03-0-05-016.019 | 11450 N. Huron St, CO | Commercial – multi-tenant (30,782 SF) |
+
+*(Plus 11 further properties — R0048725, I-25 Corporate Center, the Fraser St / E. 33rd Pl / Moncrieff / Uravan
+group — carried over from the consolidated `Master_Property_Database_2` workbook.)*
 
 ## Workbook Tabs
 
@@ -53,41 +62,36 @@ extraction workflow so future document batches can be parsed and merged in quick
   tax figures, not NOI. See the Assessments & Valuation tab for stabilized-NOI proformas.
 - R0169133's cover value ($3,408,546) differs from its schedule total ($3,114,815); both are
   reproduced as printed.
-- **R0180834 / Denver Distribution Center** — single tenant United Natural Foods Inc, 553,757 SF,
-  100% occupied, lease 6/15/2012–10/31/2028 at $0.54/SF/mo ($6.52/SF/yr), stepping to $0.56
-  ($6.69/SF/yr) on 11/1/2025. FY2024 accrual: revenue $5,292,302, OpEx $2,376,573, **NOI
-  $2,915,729**; financing cost $902,885 is carried separately. Address and year built are not
-  stated anywhere in the source document.
-- **R0212546 / 2780 N. Tower Road** — absolute net single-tenant lease: property taxes, R&M and
-  (in FY2024) utilities are all **$0** to the owner. Rent $3,047,376 = **$8.07/SF** on 377,729 SF
-  in FY2024 and $2,979,661 = $7.89/SF in FY2023. Its "Total Expense" is a QuickBooks figure that
-  *includes* $456,096 depreciation and $12,124 amortization; cash operating expense is only
-  $46,980 ($0.12/SF). The two uploaded PDFs for this account contain the identical P&L, so the
-  data is entered once.
-- **R0083953 / Majestic Commercenter** — 4 units of 50,000 SF (Zayo Group, Tritz Pallet ×2, Peco
-  Pallet), 100% occupied at all four rent-roll dates 2021–2024. Base rent grew $52,083 → $58,458
-  per month ($3.12 → $3.51/SF). Three full years of income statements (FY2022–FY2024) are loaded.
-  Its 6/30/2024 recap page shows Peco Pallet expiring 3/31/2030 while the Colliers rent roll for
-  the same date shows 3/31/2025; both are reproduced as printed.
-- None of the five documents in that batch contain an assessor value or a petitioner opinion of
-  value, so no rows were added to **Assessments & Valuation** for those three properties.
-- **R0132030 / Commercenter #22 LLC** — 200,090 SF in Aurora, only two suites leased (Expeditors
-  International 64,835 SF to 7/31/2026; Steelcase 85,253 SF to 12/31/2024) with **50,002 SF
-  (24.99%) vacant at all three rent-roll dates** (6/30/23, 12/31/23, 6/1/24). FY2024 accrual:
-  revenue $1,648,443, operating expense $872,475, **operating income $775,968**; after $457,398
-  mortgage interest and $743,031 of other (income)/expense the printed bottom line is a **net loss
-  of $(424,461)**. The petitioner's Exhibit H proforma indicates $14,013,500 as-if-stabilized
-  ($70.04/SF) and **$13,402,900** after a $(610,600) excess-vacancy adjustment.
-  - ⚠️ *Source-document defect, reproduced not corrected:* the statement's "Total Other
-    (Income)/Expense" subtotal of $743,031.13 does not equal its own printed line items, which add
-    to $25,001.47. The $718,029.66 gap is exactly twice the $(359,014.83) Depr-Buildings Step Up
-    credit — the report adds that credit rather than subtracting it. The printed subtotal is the
-    one consistent with the printed net loss, so it is entered as a hard value (not a `SUM`) and
-    the line items are entered as printed, with the discrepancy annotated in the cell.
-  - The proforma's "Adjustment for 67% Vacancy" label is as printed and does not match the 24.99%
-    vacancy on the rent roll.
-- The **Dollar General / HighPoint Elevated** article (Mile High CRE, 8/9/2022) covers a 919,000 SF
-  build-to-suit at a third-party Aurora development. It carries no rent roll, lease, or
-  income/expense data for any subject property, so it is indexed in **Source Documents** for
-  context only and has no Property Master row — consistent with the database scope, which excludes
-  market/comparable support material.
+- **R0180834 / Denver Distribution Center** — United Natural Foods, 553,757 SF, 100% occupied, $0.54→$0.56/SF/mo
+  ($6.52→$6.69/SF/yr). FY2024: revenue $5,292,302, OpEx $2,376,573, **NOI $2,915,729**.
+- **R0212546 / 2780 N. Tower Road** — absolute net: taxes, R&M and (FY2024) utilities all **$0** to the owner.
+  Rent **$8.07/SF** (FY2024) and $7.89/SF (FY2023) on 377,729 SF. Its "Total Expense" includes $456,096
+  depreciation; cash operating expense is only $46,980 ($0.12/SF).
+- **R0132030 / Commercenter #22** — Expeditors International (64,835 SF) and Steelcase (85,253 SF) leased,
+  **50,002 SF (24.99%) vacant** at all three rent-roll dates. FY2024 operating income $775,968; net loss
+  $(424,461). Proforma value $13,402,900.
+  - ⚠️ *Source defect, reproduced not corrected:* its "Total Other (Income)/Expense" subtotal ($743,031.13) does
+    not equal its own line items ($25,001.47). The gap is exactly twice the $(359,014.83) depreciation step-up
+    credit, which the report adds rather than subtracts. The printed subtotal is the one consistent with the
+    printed net loss, so it is stored as a hard value, not a `SUM`.
+- **R0085560 / 14891 E. Colfax** — Meineke Car Care, 4,264 SF, 100% occupied, lease 12/1/2021–7/31/2026 with
+  printed steps $17.32 → $18.93/SF. Four years of cash-basis P&L (2021-2024). Assessor $1,172,600 vs petitioner
+  **$870,000**; agent proforma ($17.85 rent, 7% vacancy, 8% expenses, 7.5% cap) = $868,290.
+- **R0030089 / 11450 N. Huron** — 30,782 SF, FY2021 and FY2022 income & expense. County $5,987,885 vs requested
+  **$3,500,000**. Expenses $7.13/SF (2021) and $8.04/SF (2022).
+  - The schedule prints depreciation, amortization, the owner management fee, quarterly estimated tax and
+    general-building capital in a **side column outside the totalled year columns** — they are excluded from
+    Total Expenses and from the capitalised net income. Those items are stored separately, tagged
+    *Excluded from total*. In-column line items foot to the printed totals within $1–$3 (the schedule rounds
+    every line to whole dollars).
+- **County income & expense surveys** (R0037193, R0075352, R0077789, R0077963, R0030085) are single-page owner
+  responses with no rent roll or full P&L. Specific limits:
+  - **R0075352** answers the operating-expense grid with A/B letters showing *who pays* rather than dollar
+    amounts, so no expense figures exist for it. It also reports 100% owner-occupancy alongside a $27,825/mo
+    NNN rent — a related-party lease.
+  - **R0030085** reports building insurance as "included in total CO" (corporate level), so its $64,534 expense
+    total is **partial**.
+  - **R0077789** and **R0030085** are 100% owner-occupied and report no rent at all.
+- The **Dollar General / HighPoint Elevated** article is indexed in Source Documents as market context only and
+  has no Property Master row; **R0030089 pages 8-9** are CoStar sale comparables and were skipped — the database
+  excludes market/comparable support material.
