@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (22)
+## Subject Properties (34)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -19,6 +19,18 @@ extraction workflow so future document batches can be parsed and merged in quick
 | SGS – Pennsylvania Industrial | R0024442 | R0024442 | 12260 Pennsylvania St, Thornton, CO | Industrial – Warehouse |
 | Broadview | R0002819 | 01569-06-3-13-002 | 125 Bridge St, Brighton, CO 80602 | Commercial (multi-tenant) |
 | 6770 E. 56th Ave | R0092302 | R0092302 | 6770 E. 56th Ave, Aurora, CO 80022 | Industrial – Warehouse |
+| 9345/9335 Elm Ct (TARA) | R0048725 | 0171920102027 | 9345 (9335) Elm Ct, CO | Commercial rental |
+| I-25 Corporate Center | R0070622-27 | — | 460-550 E. 76th Ave, Denver, CO | Industrial – Warehouse/Mfg |
+| Majestic Commercenter | R0083953 | — | 20901 E. 32nd Pkwy, Aurora, CO | Industrial – Warehouse (4 suites) |
+| 3254 & 3650 Fraser St | R0084233 | — | 3254-3650 Fraser St, Aurora, CO | Industrial – Warehouse (2 bldgs) |
+| 14501 E. 35th Pl | R0084237 | 01821-30-0-02-005 | 14501 E. 35th Pl, Aurora, CO | Industrial – Warehouse/Distribution |
+| 1803 E 58th Ave (Arakouzo) | R0103791 | R0103791 | 1803 E 58th Ave, Denver, CO | Industrial – Warehouse/Bakery |
+| 14200 E. 33rd Pl | R0084249 | 01821-30-0-04-010 | 14200 E. 33rd Pl, Aurora, CO | Industrial – Warehouse |
+| 3250 Abilene St | R0084250 | bt42569 | 3250 Abilene St, Aurora, CO | Industrial – Warehouse |
+| 14509 E. 33rd Pl | R0084253 | bt46265 | 14509 E. 33rd Pl, Aurora, CO | Industrial – Warehouse |
+| 14705 E. 33rd Pl | — | bt46267 | 14705 E. 33rd Pl, Aurora, CO | Industrial – Warehouse |
+| 14501 E. Moncrieff Pl | R0084268 | — | 14501 E. Moncrieff Pl, Aurora, CO | Industrial – Warehouse/Distribution |
+| Aurora - Uravan (Wagner) | R0086203 | R0086203 | 2420 Uravan St, Aurora, CO | Industrial – Warehouse |
 | Cast Transportation Sub. (BTS) | R0213618 | R0213618 | Cast Transportation Subdivision, Commerce City, CO | Industrial – Distribution (BTS) |
 | Grand Lake | R0179014 | 0182505219006 | 1010 Lousell Blvd, Westminster, CO | Warehouse / Light Industrial |
 | 8500 Brighton Partners | R0179050 | R0179050 | 8510 Brighton Rd, Adams County, CO | Industrial – Vehicle Auction/Storage |
@@ -89,3 +101,26 @@ extraction workflow so future document batches can be parsed and merged in quick
 - Per the skill's scope rule, CoStar sale-comparable data bundled into several of these PDFs
   (R0100737, R0030089) was **not** stored — only the subject property's own lease/income/expense
   and assessment data was extracted.
+
+### Batches 2-3 (12 properties: R0048725 through R0086203)
+
+These 12 properties were added to the canonical copy of `Master_Property_Database.xlsx` on
+Google Drive by other work sessions between this repo's last sync and the 325-folder update
+above — they were never committed to this git repo. When updating the Drive file with the
+325-folder batch, the current Drive copy (not this repo's stale local copy) was used as the
+merge base, so this repo now also reflects those 12 properties. Their extraction caveats
+(Sterling appeals' tax treatment, 1st Net's formulaic 3%+5% expense ratios, accrual vs. cash vs.
+tax-basis accounting, the R0091936/R0091934 duplicate upload, source-document discrepancies on
+2021-22 income data, rent-roll SF counts, and county values) are documented inline in the
+workbook's own notes rows on each tab — see **Assessments & Valuation** row 33 and **Source
+Documents** rows 30-32 for the full detail, since they were authored by those sessions and are
+not duplicated here.
+
+## Syncing with Google Drive
+
+The canonical, most up-to-date copy of this workbook lives on Google Drive in the
+**Expenses & Leases** folder as `Master_Property_Database.xlsx`. Multiple sessions/agents may
+update that Drive copy directly (e.g. from other document-batch folders like `407` or
+`Mega Warehouse`) without necessarily pushing back to this git repo. When asked to "update the
+master database," always treat the **current Drive copy** as the source of truth to merge into
+— not just this repo's last commit — to avoid silently discarding other sessions' work.
