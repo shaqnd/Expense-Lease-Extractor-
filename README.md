@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (8)
+## Subject Properties (11)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -19,6 +19,9 @@ extraction workflow so future document batches can be parsed and merged in quick
 | SGS – Pennsylvania Industrial | R0024442 | R0024442 | 12260 Pennsylvania St, Thornton, CO | Industrial – Warehouse |
 | Broadview | R0002819 | 01569-06-3-13-002 | 125 Bridge St, Brighton, CO 80602 | Commercial (multi-tenant) |
 | 6770 E. 56th Ave | R0092302 | R0092302 | 6770 E. 56th Ave, Aurora, CO 80022 | Industrial – Warehouse |
+| Thornton (TH) - Dahn - 21548 | R0040829 | 0171914201013 | 10350 Washington Street, Adams County, CO | Specialty – Self Storage |
+| Aurora - 18th Avenue - CS - 6730 | R0086010 | 0182132318001 | 15413 E 18th Ave, Aurora, CO 80011 | Specialty – Self Storage |
+| Aurora Altura Boulevard CS 6731 | R0085571 | 0182131405022 | 1540 Altura Blvd, Aurora, CO 80011 | Specialty – Self Storage |
 
 ## Workbook Tabs
 
@@ -29,6 +32,9 @@ extraction workflow so future document batches can be parsed and merged in quick
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
 7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+8. **Self-Storage Comparison** – side-by-side income/expense/valuation comparison of the three
+   Adams County self-storage tax appeals (10350 Washington St, 15413 E 18th Ave, 1540 Altura
+   Blvd), pulled from the "R0040829 - 10350 Washington Street" folder under December Hearings.
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -49,3 +55,11 @@ extraction workflow so future document batches can be parsed and merged in quick
   tax figures, not NOI. See the Assessments & Valuation tab for stabilized-NOI proformas.
 - R0169133's cover value ($3,408,546) differs from its schedule total ($3,114,815); both are
   reproduced as printed.
+- **Self-storage batch (10350 Washington St, 15413 E 18th Ave, 1540 Altura Blvd)**: all three are
+  Ryan LLC income-capitalization appeals valued as of 6/30/2024. 10350 Washington's appeal package
+  contains only the income-cap proforma — no actual on-site P&L — so its actual-statement cells in
+  the Self-Storage Comparison tab are marked "—"; the two Winner Storage/CubeSmart comps (stores
+  6730 and 6731) include real Dec 2024 YTD consolidated income statements, reconciled to the cent
+  against the printed totals. 1540 Altura Blvd's document header prints "Assessment Year: 2026"
+  but its own value table and income statement are labeled 2025 — reproduced as printed.
+  `Appeal docs R0040829.pdf` and `R0040829 self storage.pdf` in the source folder are duplicates.
