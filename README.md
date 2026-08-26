@@ -54,7 +54,8 @@ extraction workflow so future document batches can be parsed and merged in quick
 4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
 5. **Income-Expense Summary** – total income / expense / net by property and year.
 6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+7. **Expense Comps ($ per SF)** – Insurance, Utilities, CAM+Repairs & Maintenance, and Management costs per SF, one row per property/year, sorted and filterable by **OCC Code** and **Size (SF)** to build appraisal comp sets. $/SF columns are live formulas (`$ amount / Size (SF)`); a blended "Total (4 cats) $/SF" only populates when all four categories have a reported $ amount (never guessed/backfilled as $0). NNN leases (the 3 Amazon leaseholds + Home Depot Denver) are listed separately as excluded, since the tenant pays these costs directly and no landlord-side actual $ exists in the source documents. `OCC Code` is a simple use-based classification (IND-WHSE / IND-DIST / IND-MFG / IND-FLEX / COM-MT) inferred from each property's `Property Type / Use` — **not** an official Adams County CAMA occupancy code; swap in the official code if the sheet needs to match county records exactly.
+8. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way, plus the Cherry/Thornton/Huron/Park 76/Quintero Owner LLC portfolio from the Home Depot Denver appeal.
 
 > Scope: this database is for **lease and income/expense** extraction and storage. Sales
 > comparables and other market/appraisal support data in the source files are intentionally
@@ -116,3 +117,17 @@ be filtered/identified separately from the original 8 properties.
   symbol/dingbat font and not decodable — flagged as a gap, not entered.
 - Lease/rent comps (CoStar reports, Lowery/RealtyRates surveys, market lease-comp tables) in
   every 584-batch document were skipped per the established scope (subject-property data only).
+
+## Expense Comps tab (2026-08-25)
+
+Added the **Expense Comps ($ per SF)** tab (see Workbook Tabs above) at the user's request, to
+organize Insurance / Utilities / CAM+R&M / Management costs on a $/SF basis, sortable by OCC
+Code and Size. Building this required going back to the source documents for the 6 Majestic
+Commercenter buildings that had only summary totals in Income-Expense Detail (Bldgs 11, 15, 22,
+24, 26, 29) and re-deriving their per-category GL breakdown (Insurance, Utilities, CAM+R&M,
+Management), each reconciled in Python to the cent against the printed Total Operating Expenses.
+The 22100 E 26th Ave (ASB) figures use the statement's own category-level TOTAL lines (Cleaning,
+Repairs & Maintenance, Utilities, Roads & Grounds, Security & Life Safety, Management Fee,
+Insurance) rather than summing individual monthly cells, because that statement's monthly-column
+OCR is unreliable (already flagged in Income-Expense Detail) — the category totals themselves are
+clean, printed figures.
