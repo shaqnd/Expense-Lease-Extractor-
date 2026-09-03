@@ -1,85 +1,96 @@
-# Master Property Database — Lease & Income/Expense Extract
+# Master Property Database — Expense Comp Finder
 
-`Master_Property_Database.xlsx` consolidates lease, income/expense, and valuation data
-extracted and cleaned from the source documents (scanned PDFs, text PDFs, a DOCX appraisal,
-and XLSX financials). All subject properties are in **Adams County, Colorado**.
+`Master_Property_Database.xlsx` is organized for one job: find comparable expenses. Search by
+**OCCC Code** (property use type) and **Building Size (SF)**, then read the matching expenses on
+an **annual** or **per-square-foot** basis. All 29 subject properties are in **Adams County /
+metro Denver, Colorado**.
 
-A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
-extraction workflow so future document batches can be parsed and merged in quickly.
+## Workbook Tabs (3)
 
-## Subject Properties (29)
+1. **Property Registry** — one row per property: identity (ID, name, address), **OCCC Code**,
+   **Building Size (SF)** + its source, year built, tenancy, owner, latest assessor value, and a
+   live **Has Expense Data** flag. Sorted by OCCC Code, then Building Size (largest first).
+2. **Expenses - Annual** — every operating expense, interest, and other-expense line item, in
+   annual dollars. `OCCC Code` and `Building Size (SF)` are pulled live from Property Registry
+   (`INDEX`/`MATCH` on Property ID), so they always stay in sync with the registry.
+3. **Expenses - Per SF** — the identical line items, normalized to `$/SF` (`Annual Amount ÷
+   Building Size`). Every column here is a live formula pointing back at Expenses - Annual, so
+   the two tabs never drift apart — edit one fact in Annual and both update.
 
-The original 8 properties below, plus 21 more added in **Batch 584** (industrial/logistics
-portfolio incl. several Majestic Commercenter buildings, the Denali 3-building complex, 2780 N.
-Tower Road, and three Amazon-fulfillment facilities). Batch 584 rows are tagged in the **Batch**
-column on Property Master, Income-Expense Summary, and Income-Expense Detail. Full roster is on
-the **Property Master** tab.
+All three tabs have a frozen header row and AutoFilter enabled — filter Property Registry or
+either expense tab down to one OCCC Code, a Building Size range, a Category, or a specific
+property in a few clicks.
 
-| Property | Account / Schedule | Parcel # | Address | Type |
-|---|---|---|---|---|
-| 7205 Gilpin Way | R0178308 | R0178308 | 7205 Gilpin Way, Denver, CO 80229 | Industrial – Warehouse |
-| (7194) CO-Aurora | R0169133 | R0169133 | 17608 E. 24th Drive, Aurora, CO 80011 | Industrial – Distribution |
-| TempTee Brand Steaks | R0103792 | 0182511406001 | 2011 E 58th Ave, Denver, CO 80216-1517 | Industrial – Mfg / Food Processing |
-| 5970 Marion Drive | — | 0182511303018 | 5970 Marion Drive, Denver, CO 80216 | Industrial (2-unit multi-tenant) |
-| Washington Business Park | R0103767 | R0103767 | 5650 Washington St, Denver, CO | Industrial / Flex (multi-tenant) |
-| SGS – Pennsylvania Industrial | R0024442 | R0024442 | 12260 Pennsylvania St, Thornton, CO | Industrial – Warehouse |
-| Broadview | R0002819 | 01569-06-3-13-002 | 125 Bridge St, Brighton, CO 80602 | Commercial (multi-tenant) |
-| 6770 E. 56th Ave | R0092302 | R0092302 | 6770 E. 56th Ave, Aurora, CO 80022 | Industrial – Warehouse |
+## How to use it for comps
 
-## Workbook Tabs
+1. On **Property Registry**, filter `OCCC Code` to the use type you're comping (see key below)
+   and/or filter `Building Size (SF)` to a size band. Note which of those properties have
+   `Has Expense Data = Yes`.
+2. Switch to **Expenses - Annual** or **Expenses - Per SF**, filter `OCCC Code` (and `Building
+   Size (SF)` if you want a tighter band), then filter `Category` to `Expense` for pure operating
+   costs — or include `Interest` / `Other Income/Expense` if you also want financing and
+   depreciation/amortization for that property.
+3. Read `Line Item / Account` for the specific cost type (Insurance, Utilities, R&M, Management,
+   Real Estate Taxes, etc.) and compare `Annual Amount` or `Amount per SF` across properties.
 
-1. **Source Documents** – index of the source files and compilation notes.
-2. **OCCC Legend** – the OCCC (Occupancy Classification Code) key: one short code per distinct
-   `Property Type / Use`, with its description and which properties carry it.
-3. **Property Master** – one row per property: IDs, parcel, address, owner, assessee, type, tenancy, site/GBA/NRA, year built, land:bldg, occupancy, valuation summary, **OCCC Code**.
-4. **Tenants & Leases** – actual rent rolls (125 Bridge St: 11 tenants w/ rent, term, CAM; 5970 Marion units) plus proforma lease assumptions used in the tax appeals.
-5. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
-6. **Income-Expense Summary** – total income / expense / net by property and year, with **OCCC Code**.
-7. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals. Includes **OCCC Code**.
-8. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way.
+**Only 14 of the 29 properties have captured expense detail** (the rest are lease/appraisal-only
+proforma entries with no income/expense statement in the source documents) — that's what the
+`Has Expense Data` column on Property Registry flags before you go looking.
 
-> Scope: this database is for **lease and income/expense** extraction and storage. Sales
-> comparables and other market/appraisal support data in the source files are intentionally
-> not stored here.
+## OCCC Code key
 
-## Filtering by OCCC Code
-
-No OCCC (Occupancy Classification Code) field existed in any source document or in the prior
-version of this workbook. To make the properties and their expense rows filterable by use type,
-this version assigns a short **OCCC Code** to every property, derived from its existing
-`Property Type / Use` value (see the **OCCC Legend** tab for the key):
+OCCC (Occupancy Classification Code) is **not an official code from any source document** — no
+such field existed in the original materials. It's a short code this workbook assigns to every
+property from its `Property Type / Use`, purely so properties can be filtered/grouped by use
+type. If your organization or the county assessor already issues real OCCC codes, send them over
+and this column gets remapped.
 
 | OCCC Code | Description | # Properties |
 |---|---|---|
 | IND-WH | Industrial – Warehouse | 18 |
-| IND-DIST | Industrial – Distribution | 3 |
 | IND-AMZN | Industrial – Amazon fulfillment / logistics | 3 |
+| IND-DIST | Industrial – Distribution | 3 |
 | IND-MFG | Industrial – Manufacturing / Food Processing | 2 |
+| COM-MT | Commercial (multi-tenant industrial) | 1 |
 | IND-2U | Industrial – 2-unit (multi-tenant) | 1 |
 | IND-FLEX | Industrial / Flex (multi-tenant) | 1 |
-| COM-MT | Commercial (multi-tenant industrial) | 1 |
 
-(Full property-by-code breakdown is on the **OCCC Legend** tab.)
+## Building Size (SF)
 
-The **OCCC Code** column is on **Property Master**, **Income-Expense Summary**, and
-**Income-Expense Detail**, and AutoFilter is enabled on all three tabs (plus the legend), so you
-can filter expense line items, summary totals, or the property roster down to one use type in a
-click. If "OCCC code" refers to a specific code your organization or the county assessor already
-issues (rather than a use-type classification), let me know the actual codes/scheme and I'll
-remap this column instead of the assigned ones above.
+`Building Size (SF)` on Property Registry uses **NRA/NLA (net rentable/leasable area)** where the
+source documents give it — the field expense comps are conventionally normalized against — and
+falls back to **GBA (gross building area)** only where NRA wasn't captured. The `Size Source`
+column says which. One property, **Broadview (125 Bridge St, R0002819)**, has no building size in
+any source document; its `$/SF` reads **"n/a"** everywhere rather than a fabricated number.
 
-## Notes
+**2780 N. Tower Road** is captured as one combined income statement for both of its parcels
+(R0212546 + R0212547); the expense rows use parcel R0212546's building size (386,000 SF) — see
+the note on those rows.
 
-- Total / net-income / average cells are live spreadsheet formulas (`SUM`, `AVERAGE`,
-  subtraction); each was verified in Python to equal the source-document printed total to the
-  cent. They populate on open in Excel/Google Sheets. (LibreOffice cannot cold-start in the
-  build sandbox, so the automated recalc pass is skipped in favor of Python verification.)
-- **5650 Washington St** (appraisal DOCX): the rent-roll grid, income proforma, and final
-  concluded value are embedded as **EMF vector images** and could not be extracted as text; the
-  narrative figures (rent range, vacancy 7%, OpEx $7.17/sf ≈ 47.1% EGI, adjusted comp range
-  $115.46–$134.48/sf) are captured. The concluded value is in the appraisal images.
-- "in house" on the TempTee survey = owner self-performs the service, entered as `$0`.
-- 5970 Marion and Broadview expense totals include financing/depreciation, so they are cash-flow /
-  tax figures, not NOI. See the Assessments & Valuation tab for stabilized-NOI proformas.
-- R0169133's cover value ($3,408,546) differs from its schedule total ($3,114,815); both are
-  reproduced as printed.
+## Data notes
+
+- **Expense figures are extracted facts, not live-recalculated formulas.** The original source
+  workbook's `=SUM(...)` cross-check formulas were resolved to their computed values (verified in
+  Python against each source document's own printed total, e.g. Broadview's Form 8825 total of
+  $316,181) before being placed here, since reorganizing the rows would have broken their
+  original cell references. Only the OCCC Code, Building Size, Has Expense Data, and $/SF columns
+  are live formulas.
+- **A formula-recalculation check (LibreOffice) could not be run in this session** — LibreOffice
+  was unable to open any file at all in this environment (confirmed on a blank test workbook),
+  which is an environment issue, not a defect in this file. In its place, every formula actually
+  written to the file was independently re-parsed and evaluated in Python against known-correct
+  values (formula ranges, OCCC/size matches for all 159 expense rows, and a spot-check against a
+  known printed total all passed with zero issues). All formulas use standard `INDEX`/`MATCH`/
+  `IFERROR`/`COUNTIF`/`IF`/`OR` functions that Excel and Google Sheets compute natively on open —
+  they will populate correctly.
+- 584-batch expense figures: `Expense` (Category) is operating expense only — it excludes
+  mortgage interest and depreciation/amortization, which are captured as separate `Interest` and
+  `Other Income/Expense` rows for the same property/period — **except** 2780 N. Tower Road,
+  Majestic Bldg 12/11, Broadway Logistics Center, and 22100 E 26th Ave (ASB), whose single
+  `Expense` totals already include interest/depreciation (see each property's Notes).
+- "In house" on the TempTee survey = owner self-performs the service, entered as `$0`.
+- Broadview and 5970 Marion figures include financing/depreciation (cash-flow/tax basis, not
+  pure NOI).
+- Prior tabs (Tenants & Leases, Assessments & Valuation, Related Parcels, Source Documents) have
+  been retired from this version to keep the workbook focused on the comp-search workflow above.
+  Ask if you need that lease/valuation detail restored as additional tabs.
