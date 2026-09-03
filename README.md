@@ -7,7 +7,13 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (8)
+## Subject Properties (29)
+
+The original 8 properties below, plus 21 more added in **Batch 584** (industrial/logistics
+portfolio incl. several Majestic Commercenter buildings, the Denali 3-building complex, 2780 N.
+Tower Road, and three Amazon-fulfillment facilities). Batch 584 rows are tagged in the **Batch**
+column on Property Master, Income-Expense Summary, and Income-Expense Detail. Full roster is on
+the **Property Master** tab.
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -43,14 +49,17 @@ version of this workbook. To make the properties and their expense rows filterab
 this version assigns a short **OCCC Code** to every property, derived from its existing
 `Property Type / Use` value (see the **OCCC Legend** tab for the key):
 
-| OCCC Code | Description | Properties |
+| OCCC Code | Description | # Properties |
 |---|---|---|
-| IND-WH | Industrial – Warehouse | 7205 Gilpin Way, SGS – Pennsylvania Industrial, 6770 E. 56th Ave |
-| IND-DIST | Industrial – Distribution | (7194) CO-Aurora |
-| IND-MFG | Industrial – Mfg / Food Processing | TempTee Brand Steaks |
-| IND-2U | Industrial – 2-unit (multi-tenant) | 5970 Marion Drive |
-| IND-FLEX | Industrial / Flex (multi-tenant) | Washington Business Park |
-| COM-MT | Commercial (multi-tenant industrial) | Broadview |
+| IND-WH | Industrial – Warehouse | 18 |
+| IND-DIST | Industrial – Distribution | 3 |
+| IND-AMZN | Industrial – Amazon fulfillment / logistics | 3 |
+| IND-MFG | Industrial – Manufacturing / Food Processing | 2 |
+| IND-2U | Industrial – 2-unit (multi-tenant) | 1 |
+| IND-FLEX | Industrial / Flex (multi-tenant) | 1 |
+| COM-MT | Commercial (multi-tenant industrial) | 1 |
+
+(Full property-by-code breakdown is on the **OCCC Legend** tab.)
 
 The **OCCC Code** column is on **Property Master**, **Income-Expense Summary**, and
 **Income-Expense Detail**, and AutoFilter is enabled on all three tabs (plus the legend), so you
