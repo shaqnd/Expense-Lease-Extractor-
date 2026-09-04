@@ -7,7 +7,7 @@ and XLSX financials). All subject properties are in **Adams County, Colorado**.
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (12)
+## Subject Properties (15)
 
 | Property | Account / Schedule | Parcel # | Address | Type |
 |---|---|---|---|---|
@@ -23,6 +23,9 @@ extraction workflow so future document batches can be parsed and merged in quick
 | Stor-n-Lock Self Storage #20 | R0169115 | 0172114202001 | 11210 E 104th Avenue, Adams County, CO | Self-Storage (NNN) |
 | All American Mini Storage | R0099616 (+5 related schedules) | 0182504223005 (+related) | 1777 W. 68th Avenue, Denver, CO 80221 | Self-Storage + Office/Residential |
 | IN Self Storage – Fitzsimons | R0085523 | R0085523 | 1520 N Fitzsimons Parkway, Aurora, CO 80011 | Self-Storage + Manager Residence |
+| Warehouse and Storage Building(s) | R0071007 | 0171935302010 | N. Pecos Ave, Denver, CO 80221 | Industrial – Multi-Tenant Storage/Warehouse Bays |
+| 8700 Devonshire Storage | R0055143 | R0055143 | 8700 Devonshire Blvd, Denver, CO 80229 | Self-Storage |
+| Public Storage #08214 | R0043569 | R0043569 | 104th Ave & Quivas St, Thornton, CO | Self-Storage |
 
 ## Workbook Tabs
 
@@ -70,3 +73,18 @@ extraction workflow so future document batches can be parsed and merged in quick
   to the on-site manager's residential apartment; the 2026 appeal in this file requests
   $3,395,400. Pages 27-28 (CoStar apartment sale comps supporting the residential allocation) are
   out of scope and were skipped.
+- **R0071007** (Warehouse and Storage Building(s), N. Pecos Ave): a multi-tenant storage yard of
+  ~90 individual bays/units (Buildings A-G) leased to a mix of individuals and small trade
+  businesses; came only as an SB 11-119 income/expense disclosure (IRS Form 8825 for 2023 & 2024
+  plus full rent rolls), with no assessor value or protest ask — summarized as a single aggregate
+  row on Tenants & Leases rather than tenant-by-tenant.
+- **R0055143** (8700 Devonshire Storage, CubeSmart-managed): its 26-month rolling income statement
+  is a dense, rotated scanned table; only clearly legible subtotals (Total Income, Total Expense,
+  Net Operating Income, and the post-debt-service Net Profit/Loss) were transcribed, not full
+  line-item categories. The taxpayer's $2,000,000 protest estimate is based on declining unit
+  occupancy (75.17% in 2023 → 73.87% in 2024 → 68.29% in Feb-2025); no county notice value is shown
+  in the source. 2024's post-debt-service cash result was a loss, driven by a one-time $182,832
+  capitalized asphalt project.
+- **R0043569** (Public Storage #08214, Thornton): only an internal FY2024 monthly Actuals P&L was
+  provided — no cover letter, appeal, or assessor/taxpayer value. Exact street address and county
+  are inferred from context (Thornton straddles Adams/Weld/Broomfield counties).
