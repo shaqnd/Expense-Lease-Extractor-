@@ -1,90 +1,71 @@
-# Master Property Database — Lease & Income/Expense Extract
+# Master Property Database — Operating Expense Comps
 
-`Master_Property_Database.xlsx` consolidates lease, income/expense, and valuation data
-extracted and cleaned from the source documents (scanned PDFs, text PDFs, a DOCX appraisal,
-and XLSX financials). All subject properties are in **Adams County, Colorado**.
+`Master_Property_Database.xlsx` is an operating-expense comparables tool for Adams County,
+Colorado industrial/commercial properties: a registry of subject properties classified by an
+"OCCC Code" (property-type code) and building size, plus every operating expense line item
+extracted from each property's tax-appeal or financial documents, in both annual-dollar and
+per-square-foot form so properties of different sizes can be benchmarked directly.
 
 A reusable Claude Code skill, **`.claude/skills/property-doc-extract`**, captures the
 extraction workflow so future document batches can be parsed and merged in quickly.
 
-## Subject Properties (15)
-
-| Property | Account / Schedule | Parcel # | Address | Type |
-|---|---|---|---|---|
-| 7205 Gilpin Way | R0178308 | R0178308 | 7205 Gilpin Way, Denver, CO 80229 | Industrial – Warehouse |
-| (7194) CO-Aurora | R0169133 | R0169133 | 17608 E. 24th Drive, Aurora, CO 80011 | Industrial – Distribution |
-| TempTee Brand Steaks | R0103792 | 0182511406001 | 2011 E 58th Ave, Denver, CO 80216-1517 | Industrial – Mfg / Food Processing |
-| 5970 Marion Drive | — | 0182511303018 | 5970 Marion Drive, Denver, CO 80216 | Industrial (2-unit multi-tenant) |
-| Washington Business Park | R0103767 | R0103767 | 5650 Washington St, Denver, CO | Industrial / Flex (multi-tenant) |
-| SGS – Pennsylvania Industrial | R0024442 | R0024442 | 12260 Pennsylvania St, Thornton, CO | Industrial – Warehouse |
-| Broadview | R0002819 | 01569-06-3-13-002 | 125 Bridge St, Brighton, CO 80602 | Commercial (multi-tenant) |
-| 6770 E. 56th Ave | R0092302 | R0092302 | 6770 E. 56th Ave, Aurora, CO 80022 | Industrial – Warehouse |
-| Simply Storage | R0102989 | R0102989 | 4911 West 58th Ave., Arvada, CO 80002 | Self-Storage |
-| Stor-n-Lock Self Storage #20 | R0169115 | 0172114202001 | 11210 E 104th Avenue, Adams County, CO | Self-Storage (NNN) |
-| All American Mini Storage | R0099616 (+5 related schedules) | 0182504223005 (+related) | 1777 W. 68th Avenue, Denver, CO 80221 | Self-Storage + Office/Residential |
-| IN Self Storage – Fitzsimons | R0085523 | R0085523 | 1520 N Fitzsimons Parkway, Aurora, CO 80011 | Self-Storage + Manager Residence |
-| Warehouse and Storage Building(s) | R0071007 | 0171935302010 | N. Pecos Ave, Denver, CO 80221 | Industrial – Multi-Tenant Storage/Warehouse Bays |
-| 8700 Devonshire Storage | R0055143 | R0055143 | 8700 Devonshire Blvd, Denver, CO 80229 | Self-Storage |
-| Public Storage #08214 | R0043569 | R0043569 | 104th Ave & Quivas St, Thornton, CO | Self-Storage |
-
 ## Workbook Tabs
 
-1. **Source Documents** – index of the source files and compilation notes.
-2. **Property Master** – one row per property: IDs, parcel, address, owner, assessee, type, tenancy, site/GBA/NRA, year built, land:bldg, occupancy, valuation summary.
-3. **Tenants & Leases** – actual rent rolls (125 Bridge St: 11 tenants w/ rent, term, CAM; 5970 Marion units) plus proforma lease assumptions used in the tax appeals.
-4. **Assessments & Valuation** – assessed/county values, prior-year values, and income-approach proformas (PGI→NOI→value).
-5. **Income-Expense Summary** – total income / expense / net by property and year.
-6. **Income-Expense Detail** – full line-item detail; totals use live `=SUM` formulas that match the printed totals.
-7. **Related Parcels** – North Side Gardens LLC 4-parcel portfolio co-listed with 7205 Gilpin Way; the 6-schedule Kekake Hale LLC / All American Mini Storage economic unit; and the ~29-parcel National Storage Affiliates / Securcare Colorado portfolio attached to the R0169115 authorization letter (reference only, not an economic unit).
+1. **Property Registry** — one row per subject property: ID, name, address, city, county, OCCC
+   Code, property type/use, building size (SF) & its source, year built, tenancy, owner/client,
+   assessment year, latest assessor value, a live `Has Expense Data` flag, and source file. Sorted
+   by OCCC Code, then building size (largest first) — filter/sort by either to find comparables.
+2. **Expenses - Annual** — operating expense, interest & other expense line items by property, in
+   annual dollars. `OCCC Code` and `Building Size (SF)` are pulled live via `INDEX/MATCH` from the
+   Property Registry, so re-sorting or editing that tab keeps these columns correct automatically.
+   `Category` is one of `Expense`, `Interest`, or `Other Income/Expense` (the latter used for a
+   non-operating rollup — debt service, depreciation/amortization, capex, etc. — where the source
+   doesn't break it out further). This tab intentionally holds **expenses only**, not rental
+   income.
+3. **Expenses - Per SF** — the same line items as Expenses - Annual, mirrored 1:1 by row and
+   normalized to $/SF of Building Size (`"n/a"` where building size isn't available).
 
-> Scope: this database is for **lease and income/expense** extraction and storage. Sales
-> comparables and other market/appraisal support data in the source files are intentionally
-> not stored here.
+### OCCC Codes in use
+
+| Code | Meaning |
+|---|---|
+| COM-MT | Commercial (multi-tenant) |
+| IND-2U | Industrial - 2-unit |
+| IND-AMZN | Industrial - Amazon fulfillment/distribution |
+| IND-DIST | Industrial - Distribution |
+| IND-FLEX | Industrial / Flex (multi-tenant) |
+| IND-MFG | Industrial - Manufacturing |
+| IND-SS | Self-Storage |
+| IND-SY | Industrial - Multi-Tenant Storage Yard/Warehouse Bays (rented bays, not individual self-storage units) |
+| IND-WH | Industrial - Warehouse |
 
 ## Notes
 
-- Total / net-income / average cells are live spreadsheet formulas (`SUM`, `AVERAGE`,
-  subtraction); each was verified in Python to equal the source-document printed total to the
-  cent. They populate on open in Excel/Google Sheets. (LibreOffice cannot cold-start in the
-  build sandbox, so the automated recalc pass is skipped in favor of Python verification.)
-- **5650 Washington St** (appraisal DOCX): the rent-roll grid, income proforma, and final
-  concluded value are embedded as **EMF vector images** and could not be extracted as text; the
-  narrative figures (rent range, vacancy 7%, OpEx $7.17/sf ≈ 47.1% EGI, adjusted comp range
-  $115.46–$134.48/sf) are captured. The concluded value is in the appraisal images.
-- "in house" on the TempTee survey = owner self-performs the service, entered as `$0`.
-- 5970 Marion and Broadview expense totals include financing/depreciation, so they are cash-flow /
-  tax figures, not NOI. See the Assessments & Valuation tab for stabilized-NOI proformas.
-- R0169133's cover value ($3,408,546) differs from its schedule total ($3,114,815); both are
-  reproduced as printed.
-- **R0102989** (Simply Storage): pages 6-22 of the source PDF are a self-storage cap-rate/market
-  survey (out of scope, skipped). The 11-page unit-level rent roll (524 units) is summarized as a
-  single aggregate row on the Tenants & Leases tab rather than transcribed unit-by-unit.
-- **R0169115** (Stor-n-Lock #20): city was not stated in the source document (Adams County,
-  11210 E 104th Ave). Its Letter of Authorization (Exhibit C) lists ~29 other Colorado
-  self-storage parcels under the National Storage Affiliates/Securcare family — reproduced on the
-  Related Parcels tab for reference; they are separate ownership entities, not part of this
-  appeal's economic unit.
+- `Has Expense Data` (Property Registry) and the `OCCC Code`/`Building Size (SF)` lookups
+  (Expenses tabs) are live formulas referencing fixed ranges (`Property Registry!$A$5:$A$40` etc.,
+  sized to the current row count). **Adding or removing property rows requires updating these
+  range endpoints** in all three tabs, or the formulas for rows beyond the old range will break.
+- Dollar totals were verified in Python against each source document's printed total before being
+  entered; `TOTAL EXPENSE`/`TOTAL EXPENSES` rows are the printed figures, not live `SUM` formulas,
+  since this schema stores each line item as a plain value (no in-sheet subtotal formulas).
 - **R0099616** (All American Mini Storage): the taxpayer's appeal treats 6 Adams County schedules
-  (R0099616, R0099615, R0099617, R0180917, R0099618, R0180918) as one economic unit; combined
-  current value $7,659,751, requested $6,250,000. Two of the six (R0099618, R0180918) are
-  detention-pond "drainage" parcels the taxpayer contends the County over-values as buildable land.
-- **R0085523** (IN Self Storage – Fitzsimons): 2023 value was reduced from $6,998,300 to
-  $5,200,000 by a Board of Assessment Appeals order (Docket 2023BAA2761), with $200,000 allocated
-  to the on-site manager's residential apartment; the 2026 appeal in this file requests
-  $3,395,400. Pages 27-28 (CoStar apartment sale comps supporting the residential allocation) are
-  out of scope and were skipped.
-- **R0071007** (Warehouse and Storage Building(s), N. Pecos Ave): a multi-tenant storage yard of
-  ~90 individual bays/units (Buildings A-G) leased to a mix of individuals and small trade
-  businesses; came only as an SB 11-119 income/expense disclosure (IRS Form 8825 for 2023 & 2024
-  plus full rent rolls), with no assessor value or protest ask — summarized as a single aggregate
-  row on Tenants & Leases rather than tenant-by-tenant.
+  (R0099616, R0099615, R0099617, R0180917, R0099618, R0180918) as one economic unit; only the
+  primary schedule (R0099616) is registered, representing the combined unit. 2024 expense detail is
+  fully itemized (21 categories, verified to $212,162 excl. RE taxes); 2021-2023 are subtotal-only
+  (excl./incl. RE-tax figures), as the source Income Analysis exhibit didn't itemize those years.
+- **R0169115** (Stor-n-Lock #20): Building Size is calculated (Annual Rent ÷ $16.00/SF NNN asking
+  rate), not a stated NRA figure. City was not given in the source (Adams County, unincorporated).
+- **R0085523** (IN Self Storage-Fitzsimons): `TOTAL EXPENSE` for 2023/2024 is the printed monthly
+  P&L total; the full line-item budget-vs-actual detail (Exhibit B in the source) was not
+  individually itemized here.
+- **R0071007** (Warehouse and Storage Building(s), N. Pecos Ave — T & G Pecos LLC): a multi-tenant
+  storage yard of ~90 individual bays/units (Buildings A-G), classified `IND-SY` rather than
+  `IND-SS` since tenants rent bays (mixed individuals & small trade businesses), not classic
+  self-storage units. No assessor value or building size is available in its source file (an SB
+  11-119 income/expense disclosure, not an appeal package).
 - **R0055143** (8700 Devonshire Storage, CubeSmart-managed): its 26-month rolling income statement
-  is a dense, rotated scanned table; only clearly legible subtotals (Total Income, Total Expense,
-  Net Operating Income, and the post-debt-service Net Profit/Loss) were transcribed, not full
-  line-item categories. The taxpayer's $2,000,000 protest estimate is based on declining unit
-  occupancy (75.17% in 2023 → 73.87% in 2024 → 68.29% in Feb-2025); no county notice value is shown
-  in the source. 2024's post-debt-service cash result was a loss, driven by a one-time $182,832
-  capitalized asphalt project.
+  is a dense, rotated scanned table; only clearly legible subtotals were transcribed (`TOTAL
+  EXPENSE` and a derived non-operating `Other Income/Expense` rollup), not full line-item
+  categories. No assessor value or building size is available in the source.
 - **R0043569** (Public Storage #08214, Thornton): only an internal FY2024 monthly Actuals P&L was
-  provided — no cover letter, appeal, or assessor/taxpayer value. Exact street address and county
-  are inferred from context (Thornton straddles Adams/Weld/Broomfield counties).
+  provided — no cover letter, appeal package, assessor/taxpayer value, or building size.
